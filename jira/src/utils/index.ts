@@ -43,6 +43,7 @@ export const useMount = (callback: () => void) => {
 // log()
 // log()
 
+// 防止短时间内的频繁请求
 export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 

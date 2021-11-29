@@ -1,5 +1,6 @@
 import qs from "qs";
 import * as auth from "auth-provider";
+import { useAuth } from "context/auth-context";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -10,7 +11,7 @@ interface Config extends RequestInit {
 
 export const http = async (
   endpoint: string,
-  { data, token, headers, ...customConfig }: Config
+  { data, token, headers, ...customConfig }: Config = {}
 ) => {
   const config = {
     method: "GET",
@@ -27,6 +28,7 @@ export const http = async (
     config.body = JSON.stringify(data || {});
   }
 
+  // axios 和 fetch 的表现不一样，axios可以直接在返回状态不为2XX的情况下抛出异常。
   return window
     .fetch(`${apiUrl}/${endpoint}`, config)
     .then(async (response) => {
@@ -43,4 +45,11 @@ export const http = async (
         return Promise.reject(data);
       }
     });
+};
+
+export const useHttp = () => {
+  const { user } = useAuth();
+  // TS 操作符
+  return (...[endpoint, config]: Parameters<typeof http>) =>
+    http(endpoint, { ...config, token: user?.token });
 };

@@ -20,6 +20,7 @@ export const cleanObject = (object: object) => {
   return cleanObject;
 };
 
+// Used to study the custom hook, won't be used in this project.
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
@@ -44,6 +45,7 @@ export const useMount = (callback: () => void) => {
 // log()
 
 // 防止短时间内的频繁请求
+
 export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 

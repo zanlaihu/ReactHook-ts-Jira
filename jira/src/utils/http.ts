@@ -1,5 +1,5 @@
 import qs from "qs";
-import * as auth from "auth-provider";
+import * as auth from "unauthenticated-app/auth-provider";
 import { useAuth } from "context/auth-context";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -32,6 +32,7 @@ export const http = async (
   return window
     .fetch(`${apiUrl}/${endpoint}`, config)
     .then(async (response) => {
+      // 未登录 或 token失效
       if (response.status === 401) {
         await auth.logout();
         // 页面刷新

@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
 import { useState } from "react";
-import * as auth from "auth-provider";
+import * as auth from "unauthenticated-app/auth-provider";
 import { User } from "pages/project-list/search-panel";
 import { http } from "utils/http";
 
@@ -8,16 +8,6 @@ interface AuthForm {
   username: string;
   password: string;
 }
-
-const bootstrapUser = async () => {
-  let user = null;
-  const token = auth.getToken();
-  if (token) {
-    const data = await http("me", { token });
-    user = data.user;
-  }
-  return user;
-};
 
 const AuthContext = React.createContext<
   | {
@@ -56,4 +46,14 @@ export const useAuth = () => {
     throw new Error("useAuth必须在AuthProvider中使用");
   }
   return context;
+};
+
+const bootstrapUser = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    const data = await http("me", { token });
+    user = data.user;
+  }
+  return user;
 };

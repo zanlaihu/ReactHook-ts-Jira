@@ -1,5 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
 import './App.less';
 import { useAuth } from "context/auth-context";
 import { AuthenticatedApp } from "anthenticated-app/anthenticated-app";

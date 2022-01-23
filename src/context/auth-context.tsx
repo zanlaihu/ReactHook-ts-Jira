@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => auth.logout().then(() => setUser(null));
 
   useEffect(() => {
-    bootstrapUser().then(setUser);
+    getUserInfo().then(setUser);
   }, []);
 
   return (
@@ -48,7 +48,7 @@ export const useAuth = () => {
   return context;
 };
 
-const bootstrapUser = async () => {
+const getUserInfo = async () => {
   let user = null;
   const token = auth.getToken();
   if (token) {
